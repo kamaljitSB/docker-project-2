@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    io.kompose.service: data-entry
+  name: data-entry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: data-entry
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.network/project2-appnetwork: "true"
+        io.kompose.service: data-entry
+    spec:
+      containers:
+        - image: kamaljitsingh/data-entry:latest
+          name: data-entry
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: analytics
+  name: analytics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: analytics
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.network/project2-appnetwork: "true"
+        io.kompose.service: analytics
+    spec:
+      containers:
+        - image: kamaljitsingh/analytics:latest
+          name: analytics
+          ports:
+            - containerPort: 8100
+          resources: {}
+      restartPolicy: Always
+status: {}

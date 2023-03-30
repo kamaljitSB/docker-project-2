@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: show-result
+  name: show-result
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: show-result
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.network/project2-appnetwork: "true"
+        io.kompose.service: show-result
+    spec:
+      containers:
+        - image: kamaljitsingh/show-result:latest
+          name: show-result
+          ports:
+            - containerPort: 3000
+          resources: {}
+      restartPolicy: Always
+status: {}

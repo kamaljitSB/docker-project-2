@@ -1,0 +1,5 @@
+express
+mysql2
+request
+mongodb
+ejs

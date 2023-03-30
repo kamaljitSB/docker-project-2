@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+              <div class="card-body">
+                <h5 class="card-title text-center">Enter Your Grade</h5>
+                <form class="form-signin" action="/enter" method="post">
+
+                  <div class="form-label-group">
+                    <input type="text" class="form-control" name="math"  required autofocus>
+                    <label for="inputEmail">Math</label>
+                  </div>
+  
+                  <div class="form-label-group">
+                    <input type="text" class="form-control" name="english" required>
+                    <label for="inputPassword">English</label>
+                  </div>
+
+                  <div class="form-label-group">
+                    <input type="text" class="form-control" name="physics" required>
+                    <label for="inputPassword">Physics</label>
+                  </div>
+
+                  <div class="form-label-group">
+                    <input type="text" class="form-control" name="chemistry" required>
+                    <label for="inputPassword">Chemistry</label>
+                  </div>
+
+                  <div class="form-label-group">
+                    <input type="text" class="form-control" name="biology" required>
+                    <label for="inputPassword">Biology</label>
+                  </div>
+
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Submit</button>
+                  <hr class="my-4">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+</body>
+</html>

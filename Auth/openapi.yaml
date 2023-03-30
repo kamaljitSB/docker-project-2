@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  title: Grading application
+  description: authenticate the user for login and enter data into the database
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+tags:
+  - name: users
+    description: only the user can access the application
+paths:
+  /login:
+    post:
+      summary: allows the user to input and see grades
+      description: allows the user to input and see grades
+      operationId: app.login_user
+      parameters:
+        - name: username
+          in: query
+          description: to pass the user account
+          schema:
+            type: string
+
+        - name: password
+          in: query
+          description: pass the password of the user
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: successfully returned a list of username and password
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                $ref: "#/components/schemas/authentication"
+        "400":
+          description: invalid user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    authentication:
+      required:
+        - username
+        - password
+      type: object
+      properties:
+        username:
+          type: string
+          example: admin
+        password:
+          type: string
+          example: password

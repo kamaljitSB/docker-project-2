@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: auth
+  name: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: auth
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.network/project2-appnetwork: "true"
+        io.kompose.service: auth
+    spec:
+      containers:
+        - image: kamaljitsingh/auth:latest
+          name: auth
+          ports:
+            - containerPort: 8090
+          resources: {}
+      restartPolicy: Always
+status: {}

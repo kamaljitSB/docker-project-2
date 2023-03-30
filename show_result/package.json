@@ -1,0 +1,24 @@
+{
+  "name": "data_entry",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "all": "^0.0.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "fetch": "^1.1.0",
+    "mongodb": "^4.10.0",
+    "node-fetch": "^2.6.7",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
