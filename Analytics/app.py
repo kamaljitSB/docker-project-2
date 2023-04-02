@@ -3,12 +3,12 @@ import pymongo
 import connexion
 
 
-client = pymongo.MongoClient("mongodb://10.30.0.5:27017/")
+client = pymongo.MongoClient("mongodb://mongo-db:27017/")
 db = client["grades_db"]
 collection = db["summary"]
 
 conn = pymysql.connect(
-    host='10.30.0.3',
+    host='mysql-db',
     user='dbuser',
     password='dbpassword',
     database='data_db',
@@ -32,6 +32,7 @@ results = cursor.fetchall()
 total = 0
 min_grade = 0
 max_grade = 0
+avg = 0
 
 for row in results:
     column = [int(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5])]

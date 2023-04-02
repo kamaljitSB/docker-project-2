@@ -18,7 +18,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 const MongoClient = require("mongodb").MongoClient;
-const url = "mongodb://10.30.0.5:27017/";
+const url = "mongodb://localhost:27017/";
 
 http.listen(3000);
 
@@ -41,7 +41,7 @@ app.post("/login", (req, res) => {
     },
   };
   fetch(
-    `http://10.30.0.2:8090/login?username=${username}&password=${password}`,
+    `http://localhost:8090/login?username=${username}&password=${password}`,
     settings
   )
     .then((response) => response.status)
@@ -84,4 +84,4 @@ app.post("/login", (req, res) => {
     });
 });
 
-console.log("App running at http://10.30.0.6:3000/show");
+console.log("App running at http://localhost:3000/show");

@@ -8,7 +8,6 @@ items:
       name: analytics
     spec:
       type: LoadBalancer
-       
       ports:
         - name: "8100"
           port: 8100
@@ -77,8 +76,8 @@ items:
     spec:
       type: LoadBalancer
       ports:
-        - name: "3307"
-          port: 3307
+        - name: "3306"
+          port: 3306
           targetPort: 3306
       selector:
         io.kompose.service: mysql-db
@@ -130,7 +129,7 @@ items:
                 matchLabels:
                   io.kompose.network/project2-appnetwork: "true"
             - ipBlock:
-                cidr: 10.30.0.0/16
+                cidr: 10.36.0.0/16
 
   - apiVersion: apps/v1
     kind: Deployment
@@ -150,7 +149,7 @@ items:
             io.kompose.network/project2-appnetwork: "true"
             io.kompose.service: analytics
           annotations:
-            "podIP": "10.30.0.4"
+            "podIP": "10.36.0.4"
         spec:
           containers:
             - image: kamaljitsingh/analytics:latest
@@ -163,9 +162,9 @@ items:
                   memory: 10Mi
           restartPolicy: Always
         # Add the podIP field to specify the IP address
-          # podIP: 10.30.0.4
+          # podIP: 10.36.0.4
         # Add the podCIDR field to specify the subnet
-        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+        # podCIDR: 10.36.0.0/16 # Uncomment this if needed
     status: {}
   - apiVersion: apps/v1
     kind: Deployment
@@ -185,7 +184,7 @@ items:
             io.kompose.network/project2-appnetwork: "true"
             io.kompose.service: auth
           annotations:
-            "podIP": "10.30.0.2"
+            "podIP": "10.36.0.2"
         spec:
           containers:
             - image: kamaljitsingh/auth:latest
@@ -198,9 +197,9 @@ items:
                   memory: 10Mi
           restartPolicy: Always
         # Add the podIP field to specify the IP address
-          # podIP: 10.30.0.2
+          # podIP: 10.36.0.2
         # Add the podCIDR field to specify the subnet
-        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+        # podCIDR: 10.36.0.0/16 # Uncomment this if needed
     status: {}
   - apiVersion: apps/v1
     kind: Deployment
@@ -221,7 +220,7 @@ items:
             io.kompose.network/project2-appnetwork: "true"
             io.kompose.service: data-entry
           annotations:
-            "podIP": "10.30.0.10"
+            "podIP": "10.36.0.10"
         spec:
           containers:
             - image: kamaljitsingh/data-entry:latest
@@ -234,9 +233,9 @@ items:
                   memory: 10Mi
           restartPolicy: Always
         # Add the podIP field to specify the IP address
-          # podIP: 10.30.0.10
+          # podIP: 10.36.0.10
         # Add the podCIDR field to specify the subnet
-        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+        # podCIDR: 10.36.0.0/16 # Uncomment this if needed
     status: {}
   - apiVersion: apps/v1
     kind: Deployment
@@ -257,7 +256,7 @@ items:
             io.kompose.network/project2-appnetwork: "true"
             io.kompose.service: mongo-db
           annotations:
-            "podIP": "10.30.0.5"
+            "podIP": "10.36.0.5"
         spec:
           containers:
             - image: kamaljitsingh/mongo:latest
@@ -273,9 +272,9 @@ items:
                   name: mongo-data
           restartPolicy: Always
         # Add the podIP field to specify the IP address
-          # podIP: 10.30.0.5
+          # podIP: 10.36.0.5
         # Add the podCIDR field to specify the subnet
-        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+        # podCIDR: 10.36.0.0/16 # Uncomment this if needed
           volumes:
             - name: mongo-data
               persistentVolumeClaim:
@@ -300,7 +299,7 @@ items:
             io.kompose.network/project2-appnetwork: "true"
             io.kompose.service: mysql-db
           annotations:
-            "podIP": "10.30.0.3"
+            "podIP": "10.36.0.3"
         spec:
           containers:
             - args:
@@ -327,9 +326,9 @@ items:
                   name: mysql-data
           restartPolicy: Always
         # Add the podIP field to specify the IP address
-          # podIP: 10.30.0.3
+          # podIP: 10.36.0.3
         # Add the podCIDR field to specify the subnet
-        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+        # podCIDR: 10.36.0.0/16 # Uncomment this if needed
           volumes:
             - name: mysql-data
               persistentVolumeClaim:
@@ -382,7 +381,7 @@ items:
             io.kompose.network/project2-appnetwork: "true"
             io.kompose.service: show-result
           annotations:
-            "podIP": "10.30.0.6"
+            "podIP": "10.36.0.6"
         spec:
           securityContext:
             fsGroup: 1001
@@ -397,9 +396,9 @@ items:
                   memory: 10Mi
           restartPolicy: Always
         # Add the podIP field to specify the IP address
-          # podIP: 10.30.0.6
+          # podIP: 10.36.0.6
         # Add the podCIDR field to specify the subnet
-        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+        # podCIDR: 10.36.0.0/16 # Uncomment this if needed
     status: {}
 
   - apiVersion: autoscaling/v1
