@@ -5,8 +5,8 @@ metadata:
     io.kompose.service: data-entry
   name: data-entry
 spec:
-    type: LoadBalancer
-    loadBalancerIP: 34.71.104.214
+  type: LoadBalancer
+  loadBalancerIP: 35.232.189.61
   ports:
     - name: "8080"
       port: 8080

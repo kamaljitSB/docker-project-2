@@ -5,6 +5,8 @@ metadata:
     io.kompose.service: analytics
   name: analytics
 spec:
+  type: LoadBalancer
+  loadBalancerIP: 35.232.189.61
   ports:
     - name: "8100"
       port: 8100

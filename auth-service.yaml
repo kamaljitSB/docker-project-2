@@ -5,6 +5,8 @@ metadata:
     io.kompose.service: auth
   name: auth
 spec:
+  type: LoadBalancer
+  loadBalancerIP: 35.232.189.61
   ports:
     - name: "8090"
       port: 8090

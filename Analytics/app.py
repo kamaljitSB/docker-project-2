@@ -3,15 +3,16 @@ import pymongo
 import connexion
 
 
-client = pymongo.MongoClient("mongodb://localhost:27017/")
+client = pymongo.MongoClient("mongodb://10.30.0.5:27017/")
 db = client["grades_db"]
 collection = db["summary"]
 
 conn = pymysql.connect(
-    host='localhost',
+    host='10.30.0.3',
     user='dbuser',
     password='dbpassword',
-    database='data_db'
+    database='data_db',
+    port=3306
 )
 
 cursor = conn.cursor()

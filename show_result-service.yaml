@@ -5,6 +5,8 @@ metadata:
     io.kompose.service: show-result
   name: show-result
 spec:
+  type: LoadBalancer
+  loadBalancerIP: 35.232.189.61
   ports:
     - name: "3000"
       port: 3000

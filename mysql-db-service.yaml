@@ -5,6 +5,8 @@ metadata:
     io.kompose.service: mysql-db
   name: mysql-db
 spec:
+  type: LoadBalancer
+  loadBalancerIP: 35.232.189.61
   ports:
     - name: "3307"
       port: 3307

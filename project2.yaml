@@ -1,0 +1,479 @@
+apiVersion: v1
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        io.kompose.service: analytics
+      name: analytics
+    spec:
+      type: LoadBalancer
+       
+      ports:
+        - name: "8100"
+          port: 8100
+          targetPort: 8100
+      selector:
+        io.kompose.service: analytics
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        io.kompose.service: auth
+      name: auth
+    spec:
+      type: LoadBalancer
+       
+      ports:
+        - name: "8090"
+          port: 8090
+          targetPort: 8090
+      selector:
+        io.kompose.service: auth
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        io.kompose.service: data-entry
+      name: data-entry
+    spec:
+      type: LoadBalancer
+       
+      ports:
+        - name: "8080"
+          port: 8080
+          targetPort: 8080
+      selector:
+        io.kompose.service: data-entry
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        io.kompose.service: mongo-db
+      name: mongo-db
+    spec:
+      type: LoadBalancer
+       
+      ports:
+        - name: "27017"
+          port: 27017
+          targetPort: 27017
+      selector:
+        io.kompose.service: mongo-db
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        io.kompose.service: mysql-db
+      name: mysql-db
+    spec:
+      type: LoadBalancer
+      ports:
+        - name: "3307"
+          port: 3307
+          targetPort: 3306
+      selector:
+        io.kompose.service: mysql-db
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        io.kompose.service: show-result
+      name: show-result
+    spec:
+      type: LoadBalancer
+       
+      ports:
+        - name: "3000"
+          port: 3000
+          targetPort: 3000
+      selector:
+        io.kompose.service: show-result
+    status:
+      loadBalancer: {}
+  # - apiVersion: networking.k8s.io/v1
+  #   kind: NetworkPolicy
+  #   metadata:
+  #     creationTimestamp: null
+  #     name: project2-appnetwork
+  #   spec:
+  #     ingress:
+  #       - from:
+  #           - podSelector:
+  #               matchLabels:
+  #                 io.kompose.network/project2-appnetwork: "true"
+  #     podSelector:
+  #       matchLabels:
+  #         io.kompose.network/project2-appnetwork: "true"
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      creationTimestamp: null
+      name: project2-appnetwork
+    spec:
+      podSelector:
+        matchLabels:
+          io.kompose.network/project2-appnetwork: "true"
+      ingress:
+        - from:
+            - podSelector:
+                matchLabels:
+                  io.kompose.network/project2-appnetwork: "true"
+            - ipBlock:
+                cidr: 10.30.0.0/16
+
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        io.kompose.service: analytics
+      name: analytics
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: analytics
+      strategy: {}
+      template:
+        metadata:
+          labels:
+            io.kompose.network/project2-appnetwork: "true"
+            io.kompose.service: analytics
+          annotations:
+            "podIP": "10.30.0.4"
+        spec:
+          containers:
+            - image: kamaljitsingh/analytics:latest
+              name: analytics
+              ports:
+                - containerPort: 8100
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 10Mi
+          restartPolicy: Always
+        # Add the podIP field to specify the IP address
+          # podIP: 10.30.0.4
+        # Add the podCIDR field to specify the subnet
+        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        io.kompose.service: auth
+      name: auth
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: auth
+      strategy: {}
+      template:
+        metadata:
+          labels:
+            io.kompose.network/project2-appnetwork: "true"
+            io.kompose.service: auth
+          annotations:
+            "podIP": "10.30.0.2"
+        spec:
+          containers:
+            - image: kamaljitsingh/auth:latest
+              name: auth
+              ports:
+                - containerPort: 8090
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 10Mi
+          restartPolicy: Always
+        # Add the podIP field to specify the IP address
+          # podIP: 10.30.0.2
+        # Add the podCIDR field to specify the subnet
+        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+      labels:
+        io.kompose.service: data-entry
+      name: data-entry
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: data-entry
+      strategy: {}
+      template:
+        metadata:
+          labels:
+            io.kompose.network/project2-appnetwork: "true"
+            io.kompose.service: data-entry
+          annotations:
+            "podIP": "10.30.0.10"
+        spec:
+          containers:
+            - image: kamaljitsingh/data-entry:latest
+              name: data-entry
+              ports:
+                - containerPort: 8080
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 10Mi
+          restartPolicy: Always
+        # Add the podIP field to specify the IP address
+          # podIP: 10.30.0.10
+        # Add the podCIDR field to specify the subnet
+        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        io.kompose.service: mongo-db
+      name: mongo-db
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: mongo-db
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            io.kompose.network/project2-appnetwork: "true"
+            io.kompose.service: mongo-db
+          annotations:
+            "podIP": "10.30.0.5"
+        spec:
+          containers:
+            - image: kamaljitsingh/mongo:latest
+              name: mongo-db
+              ports:
+                - containerPort: 27017
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 10Mi
+              volumeMounts:
+                - mountPath: /data/db
+                  name: mongo-data
+          restartPolicy: Always
+        # Add the podIP field to specify the IP address
+          # podIP: 10.30.0.5
+        # Add the podCIDR field to specify the subnet
+        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+          volumes:
+            - name: mongo-data
+              persistentVolumeClaim:
+                claimName: mongo-data
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        io.kompose.service: mysql-db
+      name: mysql-db
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: mysql-db
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          labels:
+            io.kompose.network/project2-appnetwork: "true"
+            io.kompose.service: mysql-db
+          annotations:
+            "podIP": "10.30.0.3"
+        spec:
+          containers:
+            - args:
+                - --default-authentication-plugin=mysql_native_password
+              env:
+                - name: MYSQL_ROOT_PASSWORD
+                  value: password
+                - name: MYSQL_DATABASE
+                  value: data_db
+                - name: MYSQL_USER
+                  value: dbuser
+                - name: MYSQL_PASSWORD
+                  value: dbpassword
+              image: kamaljitsingh/mysql:latest
+              name: mysql-db
+              ports:
+                - containerPort: 3306
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 10Mi
+              volumeMounts:
+                - mountPath: /var/lib/mysql
+                  name: mysql-data
+          restartPolicy: Always
+        # Add the podIP field to specify the IP address
+          # podIP: 10.30.0.3
+        # Add the podCIDR field to specify the subnet
+        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+          volumes:
+            - name: mysql-data
+              persistentVolumeClaim:
+                claimName: mysql-data
+    status: {}
+  # - apiVersion: apps/v1
+  #   kind: Deployment
+  #   metadata:
+  #     labels:
+  #       io.kompose.service: show-result
+  #     name: show-result
+  #   spec:
+  #     replicas: 1
+  #     selector:
+  #       matchLabels:
+  #         io.kompose.service: show-result
+  #     strategy: {}
+  #     template:
+  #       metadata:
+  #         labels:
+  #           io.kompose.network/project2-appnetwork: "true"
+  #           io.kompose.service: show-result
+  #       spec:
+  #         containers:
+  #           - image: kamaljitsingh/show-result:latest
+  #             name: show-result
+  #             ports:
+  #               - containerPort: 3000
+  #             resources:
+  #               requests:
+  #                 cpu: 200m
+  #                 memory: 10Mi
+  #         restartPolicy: Always
+  #   status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        io.kompose.service: show-result
+      name: show-result
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: show-result
+      strategy: {}
+      template:
+        metadata:
+          labels:
+            io.kompose.network/project2-appnetwork: "true"
+            io.kompose.service: show-result
+          annotations:
+            "podIP": "10.30.0.6"
+        spec:
+          securityContext:
+            fsGroup: 1001
+          containers:
+            - image: kamaljitsingh/show-result:latest
+              name: show-result
+              ports:
+                - containerPort: 3000
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 10Mi
+          restartPolicy: Always
+        # Add the podIP field to specify the IP address
+          # podIP: 10.30.0.6
+        # Add the podCIDR field to specify the subnet
+        # podCIDR: 10.30.0.0/16 # Uncomment this if needed
+    status: {}
+
+  - apiVersion: autoscaling/v1
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: analysis-hpa
+    spec:
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPUUtilizationPercentage: 50
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: analytics
+  - apiVersion: autoscaling/v1
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: auth-hpa
+    spec:
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPUUtilizationPercentage: 50
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: auth
+  - apiVersion: autoscaling/v1
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: data-entry-hpa
+    spec:
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPUUtilizationPercentage: 50
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: data-entry
+  - apiVersion: autoscaling/v1
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: mongodb-hpa
+    spec:
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPUUtilizationPercentage: 50
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: mongo-db
+  - apiVersion: autoscaling/v1
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: mysqldb-hpa
+    spec:
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPUUtilizationPercentage: 50
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: mysql-db
+  - apiVersion: autoscaling/v1
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: show-result-hpa
+    spec:
+      minReplicas: 1
+      maxReplicas: 5
+      targetCPUUtilizationPercentage: 50
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: show-result
+kind: List
+metadata: {}
+  

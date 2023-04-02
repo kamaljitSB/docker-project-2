@@ -18,7 +18,7 @@ def login():
     print(username, password)
 
     response = requests.post(
-        f"http://localhost:8090/login?username={username}&password={password}"
+        f"http://10.30.0.2:8090/login?username={username}&password={password}"
     )
     print("this is response: ",response.status_code)
     if response.status_code == 204:
@@ -36,7 +36,7 @@ def enter():
         biology = request.form['biology']
 
         connection = mysql.connector.connect(
-            host='localhost',
+            host='10.30.0.3',
             user='dbuser',
             password='dbpassword',
             database='data_db',
@@ -53,4 +53,4 @@ def enter():
         return render_template("show_result.html")
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080)
+    app.run(host="localhost", port=8080)
