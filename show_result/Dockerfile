@@ -1,12 +1,15 @@
 FROM node:latest
 
+WORKDIR /app
 
-COPY . . 
+COPY . .
 
 RUN npm install
 
-EXPOSE 3000
+RUN npm install mysql2
+
+USER root
+
+RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
 
 CMD ["npm", "start"]
-
-

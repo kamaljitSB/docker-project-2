@@ -1,11 +1,6 @@
 import pymysql
-import pymongo
 import connexion
 
-
-client = pymongo.MongoClient("mongodb://mongo-db:27017/")
-db = client["grades_db"]
-collection = db["summary"]
 
 conn = pymysql.connect(
     host='mysql-db',
@@ -16,14 +11,6 @@ conn = pymysql.connect(
 )
 
 cursor = conn.cursor()
-
-
-
-
-print("db",db)
-print("collection:", collection)
-
-
 
 cursor.execute('SELECT * FROM gpa_table')
 
@@ -43,21 +30,14 @@ for row in results:
 
 print("Grades summary saved")
 
+cursor.execute('TRUNCATE TABLE summary')
+cursor.execute('INSERT INTO summary (avg, min, max) VALUES (%s, %s, %s)', (int(avg), int(min_grade), int(max_grade)))
+conn.commit()
+
 conn.close()
-
-toInsert = {"avg": int(avg), "min": int(min_grade), "max":int(max_grade)}
-print(toInsert)
-collection.insert_one(toInsert)
-
-client.close()
 
 app = connexion.FlaskApp(__name__, specification_dir="")
 # app.add_api("analytics.yaml")
 
 if __name__ == "__main__":
-    app.run(port=8100, threaded=True)
-
-
-
-
-
+    app.run(host="0.0.0.0",port=8100, threaded=True)

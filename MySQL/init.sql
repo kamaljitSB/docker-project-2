@@ -9,6 +9,10 @@ CREATE TABLE IF NOT EXISTS gpa_table
     english VARCHAR(50) NOT NULL,
     physics VARCHAR(50) NOT NULL,
     chemistry VARCHAR(50) NOT NULL,
-    biology VARCHAR(50) NOT NULL)
+    biology VARCHAR(50) NOT NULL);
 
-      
+CREATE TABLE IF NOT EXISTS summary (
+    avg INT, 
+    min INT, 
+    max INT
+);
