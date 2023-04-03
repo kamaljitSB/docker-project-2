@@ -8,6 +8,7 @@ items:
       name: analytics
     spec:
       type: LoadBalancer
+      loadBalancerIP: 34.123.48.133
       ports:
         - name: "8100"
           port: 8100
@@ -24,7 +25,7 @@ items:
       name: auth
     spec:
       type: LoadBalancer
-       
+      loadBalancerIP: 34.123.48.133
       ports:
         - name: "8090"
           port: 8090
@@ -41,7 +42,7 @@ items:
       name: data-entry
     spec:
       type: LoadBalancer
-       
+      loadBalancerIP: 34.123.48.133
       ports:
         - name: "8080"
           port: 8080
@@ -58,7 +59,7 @@ items:
       name: mongo-db
     spec:
       type: LoadBalancer
-       
+      loadBalancerIP: 34.123.48.133
       ports:
         - name: "27017"
           port: 27017
@@ -75,6 +76,7 @@ items:
       name: mysql-db
     spec:
       type: LoadBalancer
+      loadBalancerIP: 34.123.48.133
       ports:
         - name: "3306"
           port: 3306
@@ -91,7 +93,7 @@ items:
       name: show-result
     spec:
       type: LoadBalancer
-       
+      loadBalancerIP: 34.123.48.133
       ports:
         - name: "3000"
           port: 3000
@@ -223,7 +225,7 @@ items:
             "podIP": "10.36.0.10"
         spec:
           containers:
-            - image: kamaljitsingh/data-entry:latest
+            - image: kamaljitsingh/data-entry:v1
               name: data-entry
               ports:
                 - containerPort: 8080

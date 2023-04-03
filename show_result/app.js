@@ -56,7 +56,8 @@ app.post("/login", (req, res) => {
     .then(() => {
       //retrieve the data from the MySQL database
       connection
-        .execute("SELECT * FROM summary ORDER BY id DESC LIMIT 1")
+      // ("SELECT * FROM summary ORDER BY id DESC LIMIT 1")
+        .execute("SELECT * FROM summary")
         .then(([result]) => {
           if (result.length == 0) {
             var items = {
@@ -84,4 +85,4 @@ app.post("/login", (req, res) => {
     });
 });
 
-console.log("App running at http://localhost:3000/show");
+console.log("App running at http://show-result:3000/show");
